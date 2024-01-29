@@ -1,5 +1,6 @@
 #include <iostream>
-#include <fstream>
+#include <fstream> // for file reading
+#include <filesystem>// to check if it is there ;
 #include <stack>
 #include <string>
 #include <system_error>
@@ -9,6 +10,8 @@ bool isvalid(std::string s) ;
 
 // vars 
 std :: string file_name ; 
+std::fstream file ;
+std::string contains ; 
 
 int main (int argc, char *argv[]) {
 
@@ -20,12 +23,27 @@ int main (int argc, char *argv[]) {
 	else 
 		file_name = argv[1];
 	
-	//file name checking 
+	//file  checking 
+	if (std ::filesystem::exists(file_name)) //checks if the file is there
+	{
+		if (std::string extintion (file_name.end ()- 3 , file_name.end()); extintion != ".bf")  // file extintion checking
+		{
+			std::cerr << "wrong file no brainfuck file found!\n";
+			return -1;
+		}
+		else 
+		{
 
-	if (std::string extintion (file_name.end ()- 3 , file_name.end()); extintion != ".bf")
-		std:: cout << extintion;
+			file = std::fstream(file_name ,std::ios::out); 
+			std :: cout << contains;
+		}
+	}
 	else 
-		std:: cout << extintion << "e" ; 
+	{
+		std:: cerr << "file does not exist\n";
+		return -1;
+	}
+	
 
 	return 0;
 }
