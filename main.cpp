@@ -10,7 +10,7 @@ bool isvalid(std::string s) ;
 
 // vars 
 std :: string file_name ; 
-std::fstream file ;
+std::ifstream file ;
 std::string contains ; 
 
 int main (int argc, char *argv[]) {
@@ -33,9 +33,16 @@ int main (int argc, char *argv[]) {
 		}
 		else 
 		{
-
-			file = std::fstream(file_name ,std::ios::out); 
-			std :: cout << contains;
+			file = std::ifstream(file_name); 
+			if (file.is_open())
+			{
+				while (file)
+				{
+					std::cout << "here";
+					std::getline(file , contains);
+					std :: cout << contains;
+				}
+			}
 		}
 	}
 	else 
