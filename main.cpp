@@ -6,7 +6,7 @@
 #include <system_error>
 //funcs 
 bool isvalid(std::string s) ;
-
+void operate(std :: string s);
 
 // vars 
 std :: string file_name ; 
@@ -15,6 +15,11 @@ std::string contains ;
 
 int main (int argc, char *argv[]) {
 
+	// while (true) {
+	// 	std :: string x ; 
+	// 	std:: cin >> x; 
+	// 	std :: cout << isvalid(x);
+	// }
 	if (argc  < 2 )
 	{
 		std::cerr << "Invalid !! there is no file neame !\n";
@@ -38,11 +43,12 @@ int main (int argc, char *argv[]) {
 			{
 				while (file)
 				{
-					std::cout << "here";
-					std::getline(file , contains);
-					std :: cout << contains;
+					std :: string temp ; 
+					std::getline(file , temp);
+					contains += temp ; 
 				}
 			}
+			operate(contains); // file is ready to be operated on ; 
 		}
 	}
 	else 
@@ -56,6 +62,7 @@ int main (int argc, char *argv[]) {
 }
 bool isvalid(std::string s) {
 	std ::stack<char> stack ;  
+
         for (char c : s) { 
 		if (c == '[')
 			stack.push(c);
@@ -68,4 +75,12 @@ bool isvalid(std::string s) {
 		}
         }
         return stack.empty();
-    }
+}
+
+void operate(std :: string s){
+	if (!(isvalid(s)))
+	{
+		std ::cout << "synatx error unmatched parenthese";
+		return;
+	}
+}
