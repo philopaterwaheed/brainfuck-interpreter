@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <fstream> // for file reading
 #include <filesystem>// to check if it is there ;
 #include <stack>
@@ -83,4 +84,82 @@ void operate(std :: string s){
 		std ::cout << "synatx error unmatched parenthese";
 		return;
 	}
+}
+
+std::string brainLuck(const std::string &code) {
+  std :: string output = ""; 
+  char input ;
+  int remain =0 ; //for [] jumping
+  std:: vector <int> arr (1,0); 
+  int codeptr = 0; 
+  for (int i =0 ; i < code.size() ; i++)
+    {
+       switch(code[i]){
+         case '>':
+          codeptr++;
+	  if (codeptr >= arr.size()) 
+		  arr.push_back(0);
+
+          break;
+         case '<':
+           codeptr--;
+	   if (codeptr < 0 )
+	   {
+		   std:: cerr << "run time error trying to aceess invalid pointer";
+		   return  "";
+	   }
+          break;
+         case '+':
+          (arr[codeptr])++;
+          if (arr[codeptr] > 255)
+            {
+            arr[codeptr] = 0  ;  
+            }
+         break;
+         case '-':
+          (arr[codeptr]) -= 1;
+          if (arr[codeptr] < 0){
+            arr[codeptr] = 255  ;
+            }
+          break;
+         case '.':
+          output+=(static_cast<char> (arr[codeptr]) );
+          break;
+         case ',':
+	   if (std::cin >> input && input >= 0 && input <= 255)
+	   {
+		arr[codeptr] = input;
+	   }
+          break;
+         case '[':
+           if (arr[codeptr] == 0  )
+            {
+             while (code[i] != ']' && remain != 0 )
+		{
+		       i++ ; 
+			if (code[i] == '[')
+				remain ++ ; 
+			if (code[i] == ']' && remain > 0)
+				remain -- ; 
+		}
+	    }
+          break;
+         case ']':
+           if (arr[codeptr] > 0  )
+             {
+               while (code[i] != '[')
+		{
+			i -- ;  
+			if (code[i] == ']')
+				remain ++ ; 
+			if (code[i] == '[' && remain > 0)
+				remain -- ; 
+             	}
+	     }
+           
+          break;
+           }
+    //std :: cout << output << " " ; 
+    }
+  return output;
 }
