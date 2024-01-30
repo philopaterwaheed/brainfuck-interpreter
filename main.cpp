@@ -8,6 +8,7 @@
 //funcs 
 bool isvalid(std::string s) ;
 void operate(std :: string s);
+std::string brainLuck(const std::string &code) ;
 
 // vars 
 std :: string file_name ; 
@@ -84,6 +85,7 @@ void operate(std :: string s){
 		std ::cout << "synatx error unmatched parenthese";
 		return;
 	}
+	std :: cout << brainLuck(s);
 }
 
 std::string brainLuck(const std::string &code) {
@@ -105,7 +107,7 @@ std::string brainLuck(const std::string &code) {
            codeptr--;
 	   if (codeptr < 0 )
 	   {
-		   std:: cerr << "run time error trying to aceess invalid pointer";
+		   std:: cerr << "RANGE ERROR";
 		   return  "";
 	   }
           break;
@@ -134,32 +136,37 @@ std::string brainLuck(const std::string &code) {
          case '[':
            if (arr[codeptr] == 0  )
             {
-             while (code[i] != ']' && remain != 0 )
+		remain =0 ; 
+             while (true)
 		{
 		       i++ ; 
 			if (code[i] == '[')
 				remain ++ ; 
 			if (code[i] == ']' && remain > 0)
 				remain -- ; 
+			else if (code[i] == ']' && remain == 0 )
+			break;
 		}
 	    }
           break;
          case ']':
            if (arr[codeptr] > 0  )
              {
-               while (code[i] != '[')
+		remain =0 ; 
+		while (true)
 		{
 			i -- ;  
 			if (code[i] == ']')
 				remain ++ ; 
 			if (code[i] == '[' && remain > 0)
 				remain -- ; 
+			else if (code[i] == '[' && remain == 0 )
+				break;
              	}
 	     }
            
           break;
            }
-    //std :: cout << output << " " ; 
     }
   return output;
 }
